@@ -1,61 +1,48 @@
 import SearchIcon from '@mui/icons-material/Search'
 import { InputAdornment } from '@mui/material'
 import Capitals from 'components/Capitals'
+import WeatherDetails from 'components/WeatherDetails'
+import { CityContext, CityContextType } from 'context/capital-context'
+import { ChangeEvent, useContext, useState } from 'react'
 import * as S from './styles'
+
 const Main = ({ title = 'Previsão do tempo' }) => {
-  // const [data, setData] = useState<CityWeather[]>([])
-  // useEffect(() => {
-  //   const mockedCities: CityWeather[] = []
-  //   cities.forEach((element) => {
-  //     api
-  //       .get('/weather', {
-  //         params: {
-  //           appid: process.env.NEXT_PUBLIC_API_KEY,
-  //           lang: 'pt-br',
-  //           q: element
-  //         }
-  //       })
-  //       .then((response: AxiosResponse<WeatherBaseResponse>) => {
-  //         mockedCities.push({
-  //           city_name: response.data.name,
-  //           weather: {
-  //             max: fahrenheitConverter(response.data.main.temp_max),
-  //             min: fahrenheitConverter(response.data.main.temp_min)
-  //           }
-  //         })
-  //         console.log('mockedCities ', mockedCities)
-  //         setData(mockedCities)
-  //       })
-  //       .finally(() => {
-  //         console.log(data)
-  //       })
-  //       .catch((err) => {
-  //         console.error('ops! ocorreu um erro' + err)
-  //       })
-  //   })
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [])
+  const { saveCity, isVisible } = useContext(CityContext) as CityContextType
+  const [formData, setFormData] = useState<string>('')
+
+  const handleSaveTodo = (e: React.FormEvent, formData: string) => {
+    e.preventDefault()
+    saveCity(formData)
+  }
+
+  const handleForm = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ): void => {
+    setFormData(e.currentTarget.value)
+  }
 
   return (
     <S.Wrapper>
       <S.Title>{title}</S.Title>
-      <S.Illustration
-        src="/img/hero-illustration.svg"
-        alt="Um desenvolvedor de frente para uma tela com um código"
-      />
-      <S.TextFieldWrapper
-        sx={{ input: { color: 'black' } }}
-        id="outlined-basic"
-        label="Insira aqui o nome da cidade"
-        variant="filled"
-        InputProps={{
-          endAdornment: (
-            <InputAdornment position="end">
-              <SearchIcon />
-            </InputAdornment>
-          )
-        }}
-      />
+      {isVisible && <WeatherDetails />}
+      <form
+        style={{ width: '100%', marginTop: '2rem' }}
+        onSubmit={(e) => handleSaveTodo(e, formData)}
+      >
+        <S.TextFieldWrapper
+          sx={{ input: { color: 'black' }, marginTop: '2rem' }}
+          label="Insira aqui o nome da cidade"
+          onChange={(e) => handleForm(e)}
+          variant="filled"
+          InputProps={{
+            endAdornment: (
+              <InputAdornment onClick={() => saveCity(formData)} position="end">
+                <SearchIcon sx={{ cursor: 'pointer' }} />
+              </InputAdornment>
+            )
+          }}
+        />
+      </form>
       <Capitals />
     </S.Wrapper>
   )
