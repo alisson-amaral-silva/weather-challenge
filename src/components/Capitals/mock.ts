@@ -1,5 +1,5 @@
 export default [
-  'Rio da Janeiro',
+  'Rio de Janeiro',
   'São Paulo',
   'Belo Horizonte',
   'Brasilia',

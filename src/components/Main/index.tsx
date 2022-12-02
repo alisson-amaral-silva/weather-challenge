@@ -2,6 +2,7 @@ import { AxiosResponse } from 'axios'
 import { WeatherBaseResponse } from 'models/weather-base-response'
 import { useEffect, useState } from 'react'
 import api from 'services/weather'
+import { fahrenheitConverter } from 'utils/fahrenheit-converter'
 import { CityWeather } from '../../models/city-weather'
 import cities from '../Capitals/mock'
 import * as S from './styles'
@@ -17,19 +18,20 @@ const Main = ({
       api
         .get('/weather', {
           params: {
-            key: process.env.NEXT_PUBLIC_API_KEY,
-            format: 'json-cors',
-            city_name: encodeURI(element)
+            appid: process.env.NEXT_PUBLIC_API_KEY,
+            lang: 'pt-br',
+            q: element
           }
         })
         .then((response: AxiosResponse<WeatherBaseResponse>) => {
           mockedCities.push({
-            city_name: response.data.results.city_name,
+            city_name: response.data.name,
             weather: {
-              max: response.data.results.forecast[0].max,
-              min: response.data.results.forecast[0].min
+              max: fahrenheitConverter(response.data.main.temp_max),
+              min: fahrenheitConverter(response.data.main.temp_min)
             }
           })
+          console.log('mockedCities ', mockedCities)
           setData(mockedCities)
         })
         .finally(() => {
