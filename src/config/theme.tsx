@@ -40,10 +40,6 @@ let theme = createTheme({
       contrastText: '#000',
       main: '#39985e'
     },
-    background: {
-      default: '#09272d',
-      paper: '#fff'
-    },
     error: {
       main: '#CE3357',
       contrastText: '#63474C'
