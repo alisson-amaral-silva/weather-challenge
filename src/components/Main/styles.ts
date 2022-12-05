@@ -1,5 +1,6 @@
 import { TextField } from '@mui/material'
 import styled from 'styled-components'
+import media from 'styled-media-query'
 
 export const Wrapper = styled.main`
   background: linear-gradient(
@@ -10,13 +11,17 @@ export const Wrapper = styled.main`
   );
   color: #fff;
   width: 100%;
-  height: 100vh;
+  height: 100%;
   display: flex;
   flex-direction: column;
   text-align: center;
-  align-items: center;
   justify-content: center;
   padding: 3rem;
+
+  ${media.greaterThan('large')`
+    align-items: center;
+    height: 100vh;
+  `}
 `
 
 export const Logo = styled.img`
@@ -26,6 +31,9 @@ export const Logo = styled.img`
 
 export const Title = styled.h1`
   font-size: 7rem;
+  ${media.lessThan('large')`
+    font-size: 4rem;
+  `}
 `
 
 export const Description = styled.h2`
@@ -39,7 +47,11 @@ export const Illustration = styled.img`
 `
 
 export const TextFieldWrapper = styled(TextField)`
-  width: 30%;
+  width: 35%;
   background-color: #ffff;
   color: black;
+
+  ${media.lessThan('large')`
+    width: 100%;
+  `}
 `

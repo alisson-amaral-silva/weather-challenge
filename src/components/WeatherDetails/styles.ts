@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import media from 'styled-media-query'
 
 export const Wrapper = styled.div`
   background-color: #fff;
@@ -7,6 +8,25 @@ export const Wrapper = styled.div`
   width: 25%;
   color: black;
   padding: 2rem 0 0 4rem;
+
+  ${media.between('large', 'huge')`
+    height: 30%;
+    width: 45%;
+    padding: 1rem 0 0 2rem;
+  `}
+
+  ${media.between('medium', 'large')`
+    width: 50%;
+    height: 20%;
+    padding: 2rem 0 0 1rem;
+  `}
+
+  ${media.lessThan('small')`
+    width: 100%;
+    height: 30%;
+    margin-top: 3rem;
+    padding: 2rem 0 0 1rem;
+  `}
 `
 
 export const HeaderWrapper = styled.div`

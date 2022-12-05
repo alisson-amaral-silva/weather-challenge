@@ -46,10 +46,10 @@ const Capitals = () => {
             <p>Max</p>
             <p>Min</p>
           </S.ThermalWrapper>
-          <S.ThermalWrapper>
+          <S.ThermalColumnWrapper>
             <p>Max</p>
             <p>Min</p>
-          </S.ThermalWrapper>
+          </S.ThermalColumnWrapper>
         </S.HeaderWrapper>
         <S.CityListWrapper>
           {data?.map((capital, index) => {
