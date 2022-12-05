@@ -19,6 +19,11 @@ export const HeadingWrapper = styled.h1`
 
 export const HeaderWrapper = styled.div`
   display: flex;
+  gap: 21rem;
+`
+
+export const ThermalWrapper = styled.div`
+  display: flex;
   gap: 1rem;
 `
 

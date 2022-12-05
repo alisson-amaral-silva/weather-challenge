@@ -4,15 +4,18 @@ import Capitals from 'components/Capitals'
 import WeatherDetails from 'components/WeatherDetails'
 import { CityContext, CityContextType } from 'context/capital-context'
 import { ChangeEvent, useContext, useState } from 'react'
+import { BeatLoader } from 'react-spinners'
 import * as S from './styles'
 
 const Main = ({ title = 'Previsão do tempo' }) => {
-  const { saveCity, isVisible } = useContext(CityContext) as CityContextType
+  const { saveWeatherForecast, isVisible, isSpinnerVisible } = useContext(
+    CityContext
+  ) as CityContextType
   const [formData, setFormData] = useState<string>('')
 
-  const handleSaveTodo = (e: React.FormEvent, formData: string) => {
+  const handleSaveCity = async (e: React.FormEvent, city: string) => {
     e.preventDefault()
-    saveCity(formData)
+    saveWeatherForecast(city)
   }
 
   const handleForm = (
@@ -24,10 +27,13 @@ const Main = ({ title = 'Previsão do tempo' }) => {
   return (
     <S.Wrapper>
       <S.Title>{title}</S.Title>
+      {isSpinnerVisible && (
+        <BeatLoader style={{ margin: '5rem' }} color="#ffffff" />
+      )}
       {isVisible && <WeatherDetails />}
       <form
         style={{ width: '100%', marginTop: '2rem' }}
-        onSubmit={(e) => handleSaveTodo(e, formData)}
+        onSubmit={(e) => handleSaveCity(e, formData)}
       >
         <S.TextFieldWrapper
           sx={{ input: { color: 'black' }, marginTop: '2rem' }}
@@ -36,7 +42,10 @@ const Main = ({ title = 'Previsão do tempo' }) => {
           variant="filled"
           InputProps={{
             endAdornment: (
-              <InputAdornment onClick={() => saveCity(formData)} position="end">
+              <InputAdornment
+                onClick={() => saveWeatherForecast(formData)}
+                position="end"
+              >
                 <SearchIcon sx={{ cursor: 'pointer' }} />
               </InputAdornment>
             )
